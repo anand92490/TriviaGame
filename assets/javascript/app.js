@@ -1,13 +1,14 @@
+console.log($);
+
 
 var counter = 30;
-var theQuestion = 0;
+var currentQuestion = 0;
 var score = 0;
-var rightAnswer = 0;
-var wrongAnswer = 0;
+var lost = 0;
 var timer;
 
 
-var funFacts = [
+var quizQuestions = [
     {
         questions:"What is the fastest aircraft in the world?",
         choices:["Lockheed SR-71 Blackbird", "Lockheed YF-12","North American X-15", "Mikoyan MiG-25 Foxbat",],
@@ -29,22 +30,33 @@ var funFacts = [
     {
         questions:"What is the richest U.S state in 2019 by medain household income?",
         choices:["California", "Texas", "Maryland", "New York" ],
-        correctAnswer:"Maryland"
+        correctAnswer:"Maryland"    
     },
-]
 
-$(document).ready(function displayQuestion(){
+    {   questions:"What is the capital city of Australia?",
+        choices:["Sydney", "Perth", "Melbourne", "Canberra"],
+        correctAnswer:"Canberra"
+    },];
 
-   var questions = funFacts[theQuestion].questions;
-   var choices = funFacts[theQuestion].choices;
-$('#time').html('Time remaining : ' + counter);
-$('#main').html('<h5>' + questions + '</h5>');
+// console.log(quizQuestions);
 
-});  
+  //display the questions in the browser.
 
-function displayChoces(choices){
-    var result = '';
-    for (var i = 0; i < choices.length; i++);
+  function loadquestion(){
+      var question =   quizQuestions[currentQuestion].questions;
+      var choices =   quizQuestions[currentQuestion].choices;
+    $("#time").html('Time Remaining :' + counter);
+      $("#game").html(`<h4>${question}</h4> ${loadChoices(choices)}`);
+    }
 
-}
-displayQuestion(); 
+    function loadChoices(choices){
+         var result = '';
+         for(var i = 0; i < choices.length; i ++){
+             result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
+         }
+
+         return result;
+    }
+
+    loadquestion(); 
+ 

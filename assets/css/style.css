@@ -1,1 +1,6 @@
 
+.choice{
+    background: rgb(17, 158, 158);
+    cursor: pointer;
+    color: aliceblue;
+}
