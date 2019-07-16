@@ -1,6 +1,7 @@
 
 .choice{
-    background: rgb(17, 158, 158);
+    background: rgb(74, 109, 224);
     cursor: pointer;
     color: aliceblue;
+    padding-left: 30px;
 }

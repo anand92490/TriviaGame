@@ -1,7 +1,7 @@
-console.log($);
 
 
-var counter = 30;
+
+var counter = 5;
 var currentQuestion = 0;
 var score = 0;
 var lost = 0;
@@ -40,9 +40,50 @@ var quizQuestions = [
 
 // console.log(quizQuestions);
 
+
+
+
   //display the questions in the browser.
 
+function nextQuestion(){
+
+    var isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
+
+    if (isQuestionOver){
+        console.log('Game is over');
+    }else{
+       
+    currentQuestion++;
+    loadquestion();
+    }
+
+}
+
+function timeUp(){
+    clearInterval(timer);
+
+    lost++;
+    nextQuestion();
+}
+
+    function countDown(){
+         counter--;
+
+         $("#time").html("Time Remaining :" + counter);
+         
+         if(counter ===0){
+             timeUp();
+
+         }
+    }
+
+
   function loadquestion(){
+    //setting the timer
+      counter = 5;
+      timer = setInterval(countDown, 1000);
+    
+
       var question =   quizQuestions[currentQuestion].questions;
       var choices =   quizQuestions[currentQuestion].choices;
     $("#time").html('Time Remaining :' + counter);
@@ -52,11 +93,24 @@ var quizQuestions = [
     function loadChoices(choices){
          var result = '';
          for(var i = 0; i < choices.length; i ++){
+             //looping over the choices
              result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
          }
 
          return result;
     }
 
+$(document).on('click', '.choice', function (){
+    var selectedAnswer = $(this).attr('data-answer');
+    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+
+    if ( correctAnswer === selectedAnswer){
+        score++;
+        console,log('win');
+    }else{
+        lost++
+        console.log("loss");
+    }
+});
     loadquestion(); 
- 
+  
