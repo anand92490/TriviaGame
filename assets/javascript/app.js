@@ -36,7 +36,48 @@ var quizQuestions = [
     {   questions:"What is the capital city of Australia?",
         choices:["Sydney", "Perth", "Melbourne", "Canberra"],
         correctAnswer:"Canberra"
-    },];
+    },
+
+    {   
+    questions:"Of which country is KLM the state airline?",
+    choices:["The Netherlands", "Germany", "Poland", "Norway"],
+    correctAnswer:"The Netherlands"
+    },
+
+
+    {   questions:"What is the official language of Brazil?",
+        choices:["Spanish","Brazalian","Portuguese","Dutch"],
+        correctAnswer:"Portuguese"
+    },
+
+
+    {   questions:"What is the National animal of USA?",
+        choices:["Mustang", "Reindeer", "bison", "moose"],
+        correctAnswer:"bison"
+    },
+
+
+    {   questions:"What is the richest country in the world?",
+        choices:["China", "USA", "Luxembourg", "Qatar"],
+        correctAnswer:"Luxembourg"
+    },
+
+
+];
+
+var correctImages = [ 
+    "./assets/images/winA.gif",
+    "./assets/images/hellYeah.gif",
+    "./assets/images/winning.gif"
+];
+
+
+var wrongImages = [
+    "./assets/images/wrongA.gif",
+    "./assets/images/wrongB.gif",
+    "./assets/images/wrongC.gif"
+
+]
 
 // console.log(quizQuestions);
 
@@ -65,7 +106,10 @@ function timeUp(){
     clearInterval(timer);
 
     lost++;
-    nextQuestion();
+
+    preloadImage();
+setTimeout(nextQuestion, 3 * 1000);
+
 }
 
     function countDown(){
@@ -89,7 +133,9 @@ function timeUp(){
       var question =   quizQuestions[currentQuestion].questions;
       var choices =   quizQuestions[currentQuestion].choices;
     $("#time").html('Time Remaining :' + counter);
-      $('#game').html(`<h4>${question}</h4> ${loadChoices(choices)}
+      $('#game').html(`<h4>${question}</h4>
+       ${loadChoices(choices)}
+       ${loadRemainingQuestion()}
       
       `);
     }
@@ -106,20 +152,23 @@ function timeUp(){
          return result;
     }
 
-$(document).on('click', '.choice', function (){
-    clearInterval(timer);
-    var selectedAnswer = $(this).attr('data-answer');
-    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    $(document).on('click', '.choice', function (){
+        clearInterval(timer);
+        var selectedAnswer = $(this).attr('data-answer');
+        var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    
+        if ( correctAnswer === selectedAnswer){
+            score++;
+            console.log('win');
+            preloadImage('win')
+            setTimeout(nextQuestion, 3 * 1000);
 
-    if ( correctAnswer === selectedAnswer){
-        score++;
-        nextQuestion();
-        console.log('win');
-    }else{
-        lost++
-        console.log("loss");
-        nextQuestion();
-    } 
+        }else{
+            lost++
+            console.log("loss");
+            preloadImage('lost')
+            setTimeout(nextQuestion, 3 * 1000);
+        } 
 });
 
 function displayResult() {
@@ -154,3 +203,22 @@ function loadRemainingQuestion(){
 
     loadquestion(); 
   
+
+    function preloadImage(status){
+    
+        var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+        if (status === 'win') {
+            $('#game').html(`
+             <p class= "preload-image">Congratulations, you've picked the correct answer</p>
+             <p class= "preload-image">The correct answer is <b>${correctAnswer}</b> </p> 
+            `);
+
+        }else{
+            $('#game').html(`
+            <p class= "preload-image">Sorry! The correct answer is <b>${correctAnswer}</b> </p>
+            <p class= "preload-image">Atleast you've learned something new</p> 
+            
+            `);
+        }
+    }
+    
