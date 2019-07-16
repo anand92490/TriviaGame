@@ -1,7 +1,7 @@
 
 
 
-var counter = 5;
+var counter = 30;
 var currentQuestion = 0;
 var score = 0;
 var lost = 0;
@@ -39,9 +39,9 @@ var quizQuestions = [
     },
 
     {   
-    questions:"Of which country is KLM the state airline?",
-    choices:["The Netherlands", "Germany", "Poland", "Norway"],
-    correctAnswer:"The Netherlands"
+        questions:"Of which country is KLM the state airline?",
+        choices:["The Netherlands", "Germany", "Poland", "Norway"],
+        correctAnswer:"The Netherlands"
     },
 
 
@@ -66,23 +66,18 @@ var quizQuestions = [
 ];
 
 var correctImages = [ 
-    "./assets/images/winA.gif",
-    "./assets/images/hellYeah.gif",
-    "./assets/images/winning.gif"
+    './assets/images/winA.gif',
+    './assets/images/hellYeah.gif',
+    './assets/images/winning.gif'
 ];
 
 
 var wrongImages = [
-    "./assets/images/wrongA.gif",
-    "./assets/images/wrongB.gif",
-    "./assets/images/wrongC.gif"
+    './assets/images/wrongA.gif',
+    './assets/images/wrongB.gif',
+    './assets/images/wrongC.gif'
 
 ]
-
-// console.log(quizQuestions);
-
-
-
 
   //display the questions in the browser.
 
@@ -91,7 +86,7 @@ function nextQuestion(){
     var isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
 
     if (isQuestionOver){
-        console.log('Game over');
+        // console.log('Game over');
         displayResult();
      
     }else{
@@ -126,7 +121,7 @@ setTimeout(nextQuestion, 3 * 1000);
 
   function loadquestion(){
     //setting the timer
-      counter = 5;
+      counter = 30;
       timer = setInterval(countDown, 1000);
     
 
@@ -159,13 +154,13 @@ setTimeout(nextQuestion, 3 * 1000);
     
         if ( correctAnswer === selectedAnswer){
             score++;
-            console.log('win');
+            // console.log('win');
             preloadImage('win')
             setTimeout(nextQuestion, 3 * 1000);
 
         }else{
             lost++
-            console.log("loss");
+            // console.log("loss");
             preloadImage('lost')
             setTimeout(nextQuestion, 3 * 1000);
         } 
@@ -201,24 +196,43 @@ function loadRemainingQuestion(){
     return  `remaining Questiomn : ${remainingQuestion} / ${totalQuestion}`;
 }
 
-    loadquestion(); 
-  
 
-    function preloadImage(status){
+function randomImage(images) {
+
+    var random = Math.floor(Math.random() * images.length);
+    var randomImage = images[random];
+
+    return randomImage;
+     
+
+}
+
+
+
+function preloadImage(status){
     
-        var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
-        if (status === 'win') {
-            $('#game').html(`
-             <p class= "preload-image">Congratulations, you've picked the correct answer</p>
-             <p class= "preload-image">The correct answer is <b>${correctAnswer}</b> </p> 
-            `);
+    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    if (status === 'win') {
+        $('#game').html(`
+         <p class= "preload-image">Congratulations, you've picked the correct answer</p>
+         <p class= "preload-image">The correct answer is <b>${correctAnswer}</b> </p> 
+         <img src="${randomImage(correctImages)}"/>
+        `);
 
-        }else{
-            $('#game').html(`
-            <p class= "preload-image">Sorry! The correct answer is <b>${correctAnswer}</b> </p>
-            <p class= "preload-image">Atleast you've learned something new</p> 
-            
-            `);
-        }
+    }else{
+        $('#game').html(`
+        <p class= "preload-image">Sorry! The correct answer is <b>${correctAnswer}</b> </p>
+        <p class= "preload-image">Atleast you've learned something new</p> 
+        <img src="${randomImage(wrongImages)}"/>
+        `);
     }
+}
+  
+$("#start").click(function(){
+    $("#start").remove();
+    $("#time").html(counter);
+    loadquestion();
+})
+
+    
     

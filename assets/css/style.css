@@ -5,3 +5,16 @@
     color: aliceblue;
     padding-left: 30px;
 }
+
+.jumbotron{
+ text-align: center;
+
+}
+
+h1{
+color: rgb(226, 82, 15);
+}
+
+body{
+    background: rgb(201, 203, 204);
+}
