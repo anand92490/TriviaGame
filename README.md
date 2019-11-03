@@ -1,5 +1,5 @@
-# TriviaGame
-Guess the correct choice game.
+# Trivia Game (Fun Facts)
 
+## Guess the correct choice game.
 
-# https://anand92490.github.io/TriviaGame/
+# [Play the Game](https://anand92490.github.io/TriviaGame/)
